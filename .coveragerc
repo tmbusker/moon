@@ -1,0 +1,3 @@
+[run]
+omit=cmm/migrations/*, **/__init__.py, **/admin.py, **/models.py, \
+     cmm/tests/*, cmm/csv/*mixin.py,cmm/signals.py,cmm/logging.py,cmm/models/*.py

@@ -1,0 +1,240 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-16 21:18+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\cmm\admin.py:25
+#, python-format
+msgid ""
+"Please enter the correct %(username)s and password for a superuser account. "
+"Note that both fields may be case-sensitive."
+msgstr ""
+
+#: .\cmm\apps.py:8
+msgid "cmm"
+msgstr "共通"
+
+#: .\cmm\csv\csv_download_mixin.py:39
+msgid "download csv"
+msgstr "CSVダウンロード"
+
+#: .\cmm\csv\csv_download_mixin.py:53
+msgid "download excel"
+msgstr "ExCELダウンロード"
+
+#: .\cmm\csv\csv_log.py:19
+msgid "Information"
+msgstr "情報"
+
+#: .\cmm\csv\csv_log.py:20
+msgid "Warning"
+msgstr "警告"
+
+#: .\cmm\csv\csv_log.py:21
+msgid "Error"
+msgstr "エラー"
+
+#: .\cmm\csv\csv_log.py:28
+msgid "Csv Upload"
+msgstr "CSVアップロード"
+
+#: .\cmm\csv\csv_log.py:29
+msgid "Csv Download"
+msgstr "CSVダウンロード"
+
+#: .\cmm\csv\csv_log.py:36
+msgid "insert"
+msgstr "新規作成"
+
+#: .\cmm\csv\csv_log.py:37
+msgid "update"
+msgstr "更新"
+
+#: .\cmm\csv\csv_log.py:41
+msgid "csv log level"
+msgstr "ログレベル"
+
+#: .\cmm\csv\csv_log.py:42
+msgid "csv log type"
+msgstr "ログタイプ"
+
+#: .\cmm\csv\csv_log.py:43
+msgid "csv edit type"
+msgstr "編集タイプ"
+
+#: .\cmm\csv\csv_log.py:44
+msgid "file name"
+msgstr "ファイル名"
+
+#: .\cmm\csv\csv_log.py:45
+msgid "row no"
+msgstr "行番号"
+
+#: .\cmm\csv\csv_log.py:46
+msgid "row content"
+msgstr "行内容"
+
+#: .\cmm\csv\csv_log.py:47
+msgid "message"
+msgstr "メッセージ"
+
+#: .\cmm\csv\csv_log.py:48 .\cmm\models\simple_table.py:14
+msgid "creator"
+msgstr "作成者"
+
+#: .\cmm\csv\csv_log.py:49 .\cmm\models\simple_table.py:13
+msgid "create time"
+msgstr "作成時間"
+
+#: .\cmm\csv\csv_log.py:50
+msgid "lot number"
+msgstr "ロット番号"
+
+#: .\cmm\csv\csv_log.py:54
+msgid "csv log"
+msgstr "CSVログ"
+
+#: .\cmm\csv\csv_log.py:55
+msgid "csv logs"
+msgstr "CSVログ"
+
+#: .\cmm\csv\csv_upload_mixin.py:21
+msgid "File to upload"
+msgstr "アップロードファイル"
+
+#: .\cmm\csv\csv_upload_mixin.py:66
+#: .\cmm\templates\admin\change_list_object_tools.html:15
+#: .\cmm\templates\cmm\change_list_with_csv_upload.html:17
+#: .\cmm\templates\cmm\csv_upload.html:9
+#: .\cmm\templates\cmm\csv_upload_error.html:9
+msgid "Upload %(name)s"
+msgstr "%(name)sのアップロード"
+
+#: .\cmm\csv\csv_upload_mixin.py:99
+#, python-format
+msgid ""
+"Upload result: uploaded %(imp)s rows, skipped %(skip)s rows and discardeded: "
+"%(dis)s rows."
+msgstr ""
+
+#: .\cmm\csv\csv_upload_mixin.py:104
+msgid "%(name)s upload errors"
+msgstr "%(name)sインポートエラー"
+
+#: .\cmm\csv\csv_uploader.py:92
+msgid "Newly imported row."
+msgstr "新規インポート行"
+
+#: .\cmm\csv\csv_uploader.py:98
+msgid "Update existing row."
+msgstr "既存業の更新"
+
+#: .\cmm\models.py:9 .\cmm\models\models.py:9
+msgid "authorization user"
+msgstr "ユーザー"
+
+#: .\cmm\models.py:10 .\cmm\models\models.py:10
+msgid "authorization users"
+msgstr "ユーザー"
+
+#: .\cmm\models.py:16 .\cmm\models.py:17 .\cmm\models\models.py:17
+#: .\cmm\models\models.py:18
+msgid "authorization group"
+msgstr "グループ"
+
+#: .\cmm\models\simple_table.py:15
+#| msgid "create time"
+msgid "update time"
+msgstr "作成時間"
+
+#: .\cmm\models\simple_table.py:16
+#| msgid "update"
+msgid "updater"
+msgstr "更新"
+
+#: .\cmm\models\simple_table.py:17
+msgid "valid"
+msgstr "有効性"
+
+#: .\cmm\models\versioned_table.py:9
+msgid "version"
+msgstr "バージョン"
+
+#: .\cmm\models\versioned_table.py:24
+msgid "Race condition was detected. Confirm the content and try again later."
+msgstr ""
+"排他処理が検出されました。内容を他人より変更されてないか確認してください。"
+
+#: .\cmm\templates\admin\change_list_object_tools.html:8
+#: .\cmm\templates\cmm\change_list_with_csv_upload.html:10
+#, python-format
+msgid "Add %(name)s"
+msgstr "%(name)sの追加"
+
+#: .\cmm\templates\admin\submit_line.html:6
+msgid "Delete"
+msgstr "削除"
+
+#: .\cmm\templates\admin\submit_line.html:8
+msgid "Close"
+msgstr "閉じる"
+
+#: .\cmm\templates\admin\submit_line.html:9
+msgid "Save as new"
+msgstr "新規保存"
+
+#: .\cmm\templates\admin\submit_line.html:10
+msgid "Save and add another"
+msgstr "保存と新規追加"
+
+#: .\cmm\templates\admin\submit_line.html:11
+msgid "Save and continue editing"
+msgstr "保存と継続編集"
+
+#: .\cmm\templates\admin\submit_line.html:11
+msgid "Save and view"
+msgstr "保存と参照"
+
+#: .\cmm\templates\admin\submit_line.html:12
+msgid "Save"
+msgstr "保存"
+
+#: .\cmm\templates\cmm\csv_upload.html:6
+#: .\cmm\templates\cmm\csv_upload_error.html:6
+msgid "Home"
+msgstr "ホーム"
+
+#: .\cmm\templates\cmm\csv_upload.html:20
+msgid "Please correct the error below."
+msgstr "下記のエラーを修正してください。"
+
+#: .\cmm\templates\cmm\csv_upload.html:20
+msgid "Please correct the errors below."
+msgstr "下記のエラーを修正してください。"
+
+#: .\cmm\templates\cmm\csv_upload.html:29
+msgid "Upload"
+msgstr "アップロード"
+
+#: .\cmm\templates\cmm\csv_upload_error.html:23
+msgid "Row No"
+msgstr "行番号"
+
+#: .\cmm\templates\cmm\csv_upload_error.html:27
+msgid "Error Message"
+msgstr "エラーメッセージ"

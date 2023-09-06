@@ -1,0 +1,43 @@
+.related-widget-wrapper-link {
+    display: none;
+}
+
+.link-button {
+    float: right;
+    display: block;
+    background: var(--button-bg);
+    border-radius: 4px;
+    padding: 10px 15px;
+    height: 15px;
+    line-height: 15px;
+    margin: 0 0 5px 5px;
+}
+
+a.link-button {
+    color: var(--button-fg);
+}
+
+.submit-row a.deletelink {
+    display: inline-flex;
+    float: left;
+}
+
+/* html_readonly_field */
+input[type=text]:read-only {
+    border: 0px;
+    pointer-events: none;
+}
+
+/* hide inline object name */
+td.original p {
+    visibility: hidden
+}
+
+.inline-group .tabular tr.has_original td {
+    padding-top: 5px;
+    padding-bottom: 4px;
+}
+
+.submit-row a.closelink {
+    margin-bottom: 5px;
+}

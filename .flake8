@@ -1,0 +1,6 @@
+[flake8]
+max-line-length = 120
+; F401: imported but not used
+; F403: unable to detect undefined names
+ignore=F401, F403 __init__.py
+; E225: missing whitespace around operator
