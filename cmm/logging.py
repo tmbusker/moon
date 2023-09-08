@@ -1,8 +1,10 @@
 from logging import Filter
+import logging
 import threading
 
 
 local = threading.local()
+
 
 class LoggingRequestAttributesMiddleware:
     """IPアドレスとログインユーザー名を取得する"""
@@ -38,6 +40,7 @@ class LoggingRequestAttributesMiddleware:
 
         return response
 
+
 class LoggingRequestAttributesFilter(Filter):
     """IPアドレスとログインユーザー名を取得する"""
     def filter(self, record):
@@ -46,3 +49,10 @@ class LoggingRequestAttributesFilter(Filter):
         record.session_key = getattr(local, 'log_session_key', None)
 
         return True
+
+
+def log_decorator(func):
+    def wrapper(*args, **kwargs):
+        logging.info(f'{func.__name__} was called with parameter {args}, {kwargs}')
+        return func(*args, **kwargs)
+    return wrapper

@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-30 17:37+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\cmm_data\apps.py:8
+msgid "cmm_data"
+msgstr "共通データ"
+
+#: .\cmm_data\models.py:23 .\cmm_data\models.py:64
+msgid "shikuchoson_code"
+msgstr "市区町村コード"
+
+#: .\cmm_data\models.py:24 .\cmm_data\models.py:70
+msgid "todofuken_name"
+msgstr "都道府県名"
+
+#: .\cmm_data\models.py:25 .\cmm_data\models.py:71
+msgid "shikuchoson_name"
+msgstr "市区町村名"
+
+#: .\cmm_data\models.py:26 .\cmm_data\models.py:67
+msgid "todofuken_kana"
+msgstr "都道府県名カナ"
+
+#: .\cmm_data\models.py:27 .\cmm_data\models.py:68
+msgid "shikuchoson_kana"
+msgstr "市区町村カナ"
+
+#: .\cmm_data\models.py:31 .\cmm_data\models.py:32
+msgid "shikuchoson"
+msgstr "市区町村"
+
+#: .\cmm_data\models.py:65
+#, fuzzy
+msgid "old_postcode"
+msgstr "旧郵便番号"
+
+#: .\cmm_data\models.py:66 .\cmm_data\models.py:87
+#, fuzzy
+msgid "postcode"
+msgstr "郵便番号"
+
+#: .\cmm_data\models.py:69
+msgid "choiki_kana"
+msgstr "町域カナ"
+
+#: .\cmm_data\models.py:72
+msgid "choiki_name"
+msgstr "町域名"
+
+#: .\cmm_data\models.py:73
+#, fuzzy
+msgid "multiple_postcode_flag"
+msgstr "複数郵便番号"
+
+#: .\cmm_data\models.py:75
+msgid "banchi_overlap_flag"
+msgstr "番地重複"
+
+#: .\cmm_data\models.py:77
+msgid "has_chome_flag"
+msgstr "丁目有無"
+
+#: .\cmm_data\models.py:79
+msgid "multiple_choiki_flag"
+msgstr "複数町域"
+
+#: .\cmm_data\models.py:81
+msgid "change_type"
+msgstr "更新タイプ"
+
+#: .\cmm_data\models.py:83
+msgid "change_reason"
+msgstr "変更理由"
+
+#: .\cmm_data\models.py:88
+#, fuzzy
+msgid "postcodes"
+msgstr "郵便番号"

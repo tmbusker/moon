@@ -6,15 +6,15 @@ from cmm.csv import CsvLog, CsvLogModelAdmin
 
 
 @pytest.fixture
-def instance() -> CsvLog:
+def csv_log() -> CsvLog:
     return CsvLog()
 
 
-def test_convert_content2json(instance):
+def test_convert_content2json(csv_log):
     # Set up some test data
     test_data = {'key1': 'value1', 'key2': 'value2'}
-    instance.row_content = test_data
-    result = instance.convert_content2json().row_content
+    csv_log.row_content = test_data
+    result = csv_log.convert_content2json().row_content
 
     # Verify that the result is a JSON string
     assert isinstance(result, str)
@@ -23,13 +23,13 @@ def test_convert_content2json(instance):
     assert json.loads(result) == test_data
 
 
-def test_convert_content2dict(instance):
+def test_convert_content2dict(csv_log):
     # Set up some test data
     test_data = {'key1': 'value1', 'key2': 'value2'}
     json_data = json.dumps(test_data)
 
-    instance.row_content = json_data
-    result = instance.convert_content2dict().row_content
+    csv_log.row_content = json_data
+    result = csv_log.convert_content2dict().row_content
 
     # Verify that the result is a dictionary
     assert isinstance(result, dict)
@@ -38,13 +38,13 @@ def test_convert_content2dict(instance):
     assert result == test_data
 
 
-def test_convert_content2values(instance):
+def test_convert_content2values(csv_log):
     # Set up some test data
     test_data = {'key1': 'value1', 'key2': 'value2'}
     json_data = json.dumps(test_data)
 
-    instance.row_content = json_data
-    result = instance.convert_content2values().row_content
+    csv_log.row_content = json_data
+    result = csv_log.convert_content2values().row_content
 
     # Verify that the result is a list
     assert isinstance(result, list)

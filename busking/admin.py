@@ -5,6 +5,7 @@ from django.contrib.auth.admin import GroupAdmin, UserAdmin
 from cmm.admin import SuperUserAdminSite
 from cmm.models import AuthUser, AuthGroup
 from cmm.csv import (download_csv, download_excel, DOWNLOAD_CSV, DOWNLOAD_EXCEL, CsvMixin)
+from cmm.csv import CsvLog, CsvLogModelAdmin
 
 
 class AuthUserAdmin(CsvMixin, UserAdmin):
@@ -42,3 +43,4 @@ buskingSite.add_action(download_excel, DOWNLOAD_EXCEL)
 
 buskingSite.register(AuthUser, AuthUserAdmin)
 buskingSite.register(AuthGroup, AuthGroupAdmin)
+buskingSite.register(CsvLog, CsvLogModelAdmin)

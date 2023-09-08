@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-26 20:33+0900\n"
+"POT-Creation-Date: 2023-09-30 17:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,18 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\busking\admin.py:19
+#: .\busking\admin.py:22
 msgid "busking site"
 msgstr "BUSKING"
 
-#: .\busking\admin.py:20
+#: .\busking\admin.py:23
 msgid "busking header"
 msgstr "バスキング"
 
-#: .\busking\admin.py:23
+#: .\busking\admin.py:26
 msgid "busking index"
-msgstr ""
+msgstr "管理画面"
 
-#: .\busking\admin.py:28
+#: .\busking\admin.py:31
 msgid "busking"
 msgstr "管理画面"

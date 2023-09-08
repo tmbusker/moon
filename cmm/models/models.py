@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, Group
 from django.utils.translation import gettext_lazy as _
+from django.db import models
 
 
 class AuthUser(AbstractUser):
@@ -9,8 +10,9 @@ class AuthUser(AbstractUser):
         verbose_name = _("authorization user")
         verbose_name_plural = _("authorization users")
         permissions = [
-            ("download_csv_authuser", "Can Download AuthUser as CSV File"),
-            ("download_excel_authuser", "Can Download AuthUser as Excel File"),
+            ("download_csv_authuser", "Can download AuthUser CSV"),
+            ("download_excel_authuser", "Can download AuthUser EXCEL"),
+            ("upload_csv_authuser", "Can upload AuthUser CSV"),
         ]
 
 
@@ -21,6 +23,12 @@ class AuthGroup(Group):
         verbose_name = _("authorization group")
         verbose_name_plural = _("authorization group")
         permissions = [
-            ("download_csv_authgroup", "Can Download AuthGroup as CSV File"),
-            ("download_excel_authgroup", "Can Download AuthGroup as Excel File"),
+            ("download_csv_authgroup", "Can download AuthGroup CSV"),
+            ("download_excel_authgroup", "Can download AuthGroup EXCEL"),
+            ("upload_csv_authgroup", "Can upload AuthGroup CSV"),
         ]
+
+
+class FlagChoices(models.IntegerChoices):
+    ON = 1, 'On'
+    OFF = 0, 'Off'

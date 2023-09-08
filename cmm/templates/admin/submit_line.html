@@ -1,7 +1,7 @@
 {% load i18n admin_urls %}
 <div class="submit-row">
   {% block submit-row %}
-    {% if show_delete_link and original %}
+    {% if show_delete_link and original and not hide_delete_link %}
       {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
       <a href="{% add_preserved_filters delete_url %}" class="deletelink">{% translate "Delete" %}</a>
     {% endif %}

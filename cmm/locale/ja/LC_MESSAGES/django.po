@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 21:18+0900\n"
+"POT-Creation-Date: 2023-09-30 17:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: .\cmm\admin.py:25
+#: .\cmm\admin.py:26
 #, python-format
 msgid ""
 "Please enter the correct %(username)s and password for a superuser account. "
@@ -29,145 +29,152 @@ msgstr ""
 msgid "cmm"
 msgstr "共通"
 
-#: .\cmm\csv\csv_download_mixin.py:39
+#: .\cmm\csv\csv_download.py:54
 msgid "download csv"
 msgstr "CSVダウンロード"
 
-#: .\cmm\csv\csv_download_mixin.py:53
+#: .\cmm\csv\csv_download.py:116
 msgid "download excel"
 msgstr "ExCELダウンロード"
 
-#: .\cmm\csv\csv_log.py:19
+#: .\cmm\csv\csv_upload_mixin.py:69 .\cmm\tests\csv\test_csv_upload.py:166
+msgid "Newly imported row."
+msgstr "新規インポート行"
+
+#: .\cmm\csv\csv_upload_mixin.py:76 .\cmm\tests\csv\test_csv_upload.py:178
+#: .\cmm\tests\csv\test_csv_upload.py:233
+msgid "Update existing row."
+msgstr "既存業の更新"
+
+#: .\cmm\csv\models.py:19
 msgid "Information"
 msgstr "情報"
 
-#: .\cmm\csv\csv_log.py:20
+#: .\cmm\csv\models.py:20
 msgid "Warning"
 msgstr "警告"
 
-#: .\cmm\csv\csv_log.py:21
+#: .\cmm\csv\models.py:21
 msgid "Error"
 msgstr "エラー"
 
-#: .\cmm\csv\csv_log.py:28
+#: .\cmm\csv\models.py:28
 msgid "Csv Upload"
 msgstr "CSVアップロード"
 
-#: .\cmm\csv\csv_log.py:29
+#: .\cmm\csv\models.py:29
 msgid "Csv Download"
 msgstr "CSVダウンロード"
 
-#: .\cmm\csv\csv_log.py:36
+#: .\cmm\csv\models.py:36
 msgid "insert"
 msgstr "新規作成"
 
-#: .\cmm\csv\csv_log.py:37
+#: .\cmm\csv\models.py:37
 msgid "update"
 msgstr "更新"
 
-#: .\cmm\csv\csv_log.py:41
+#: .\cmm\csv\models.py:41
 msgid "csv log level"
 msgstr "ログレベル"
 
-#: .\cmm\csv\csv_log.py:42
+#: .\cmm\csv\models.py:42
 msgid "csv log type"
 msgstr "ログタイプ"
 
-#: .\cmm\csv\csv_log.py:43
+#: .\cmm\csv\models.py:43
 msgid "csv edit type"
 msgstr "編集タイプ"
 
-#: .\cmm\csv\csv_log.py:44
+#: .\cmm\csv\models.py:44
 msgid "file name"
 msgstr "ファイル名"
 
-#: .\cmm\csv\csv_log.py:45
+#: .\cmm\csv\models.py:45
 msgid "row no"
 msgstr "行番号"
 
-#: .\cmm\csv\csv_log.py:46
+#: .\cmm\csv\models.py:46
 msgid "row content"
 msgstr "行内容"
 
-#: .\cmm\csv\csv_log.py:47
+#: .\cmm\csv\models.py:47
 msgid "message"
 msgstr "メッセージ"
 
-#: .\cmm\csv\csv_log.py:48 .\cmm\models\simple_table.py:14
-msgid "creator"
-msgstr "作成者"
-
-#: .\cmm\csv\csv_log.py:49 .\cmm\models\simple_table.py:13
-msgid "create time"
-msgstr "作成時間"
-
-#: .\cmm\csv\csv_log.py:50
+#: .\cmm\csv\models.py:48
 msgid "lot number"
 msgstr "ロット番号"
 
-#: .\cmm\csv\csv_log.py:54
+#: .\cmm\csv\models.py:52
 msgid "csv log"
 msgstr "CSVログ"
 
-#: .\cmm\csv\csv_log.py:55
+#: .\cmm\csv\models.py:53 .\cmm\tests\csv\test_csv_base.py:40
+#: .\cmm\tests\csv\test_csv_base.py:44 .\cmm\tests\csv\test_csv_base.py:48
 msgid "csv logs"
 msgstr "CSVログ"
 
-#: .\cmm\csv\csv_upload_mixin.py:21
+#: .\cmm\csv\models.py:59
+#, fuzzy
+#| msgid "csv log"
+msgid "csv"
+msgstr "CSVログ"
+
+#: .\cmm\csv\upload_mixin.py:24
 msgid "File to upload"
 msgstr "アップロードファイル"
 
-#: .\cmm\csv\csv_upload_mixin.py:66
+#: .\cmm\csv\upload_mixin.py:70
 #: .\cmm\templates\admin\change_list_object_tools.html:15
 #: .\cmm\templates\cmm\change_list_with_csv_upload.html:17
 #: .\cmm\templates\cmm\csv_upload.html:9
 #: .\cmm\templates\cmm\csv_upload_error.html:9
+#, python-format
 msgid "Upload %(name)s"
 msgstr "%(name)sのアップロード"
 
-#: .\cmm\csv\csv_upload_mixin.py:99
+#: .\cmm\csv\upload_mixin.py:102
 #, python-format
 msgid ""
-"Upload result: uploaded %(imp)s rows, skipped %(skip)s rows and discardeded: "
+"Upload result: uploaded %(imp)s rows, skipped %(skip)s rows and discarded: "
 "%(dis)s rows."
 msgstr ""
 
-#: .\cmm\csv\csv_upload_mixin.py:104
+#: .\cmm\csv\upload_mixin.py:107
+#, python-format
 msgid "%(name)s upload errors"
 msgstr "%(name)sインポートエラー"
 
-#: .\cmm\csv\csv_uploader.py:92
-msgid "Newly imported row."
-msgstr "新規インポート行"
-
-#: .\cmm\csv\csv_uploader.py:98
-msgid "Update existing row."
-msgstr "既存業の更新"
-
-#: .\cmm\models.py:9 .\cmm\models\models.py:9
+#: .\cmm\models\models.py:10
 msgid "authorization user"
 msgstr "ユーザー"
 
-#: .\cmm\models.py:10 .\cmm\models\models.py:10
+#: .\cmm\models\models.py:11
 msgid "authorization users"
 msgstr "ユーザー"
 
-#: .\cmm\models.py:16 .\cmm\models.py:17 .\cmm\models\models.py:17
-#: .\cmm\models\models.py:18
+#: .\cmm\models\models.py:23 .\cmm\models\models.py:24
 msgid "authorization group"
 msgstr "グループ"
 
-#: .\cmm\models\simple_table.py:15
-#| msgid "create time"
+#: .\cmm\models\simple_table.py:8
+msgid "create time"
+msgstr "作成時間"
+
+#: .\cmm\models\simple_table.py:9
+msgid "creator"
+msgstr "作成者"
+
+#: .\cmm\models\simple_table.py:10
 msgid "update time"
 msgstr "作成時間"
 
-#: .\cmm\models\simple_table.py:16
-#| msgid "update"
+#: .\cmm\models\simple_table.py:11
 msgid "updater"
 msgstr "更新"
 
-#: .\cmm\models\simple_table.py:17
+#: .\cmm\models\simple_table.py:12
 msgid "valid"
 msgstr "有効性"
 
@@ -175,7 +182,7 @@ msgstr "有効性"
 msgid "version"
 msgstr "バージョン"
 
-#: .\cmm\models\versioned_table.py:24
+#: .\cmm\models\versioned_table.py:25
 msgid "Race condition was detected. Confirm the content and try again later."
 msgstr ""
 "排他処理が検出されました。内容を他人より変更されてないか確認してください。"

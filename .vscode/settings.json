@@ -1,15 +1,13 @@
 {
     // file
-    "files.autoGuessEncoding": false,
+    "files.autoGuessEncoding": true,
     "files.encoding": "utf8",
 
     // python
     "python.defaultInterpreterPath": "${workspaceFolder}\\..\\venv\\Scripts\\python.exe",
-    "python.linting.flake8Enabled": true,
     "flake8.args": [
         "--config=${workspaceFolder}\\.flake8"
     ],
-    "python.linting.mypyEnabled": true,
     "python.terminal.focusAfterLaunch": false,
     "python.testing.pytestArgs": [
         "cmm"
@@ -19,17 +17,6 @@
     // mypy
     "mypy.configFile": ".mypy.ini",
     "mypy.dmypyExecutable": "${workspaceFolder}\\..\\venv\\Scripts\\dmypy.exe",
-
-    "yaml.schemas": {
-        "https://squidfunk.github.io/mkdocs-material/schema.json": "mkdocs.yml"
-    },
-    "yaml.customTags": [ 
-        "!ENV scalar",
-        "!ENV sequence",
-        "tag:yaml.org,2002:python/name:materialx.emoji.to_svg",
-        "tag:yaml.org,2002:python/name:materialx.emoji.twemoji",
-        "tag:yaml.org,2002:python/name:pymdownx.superfences.fence_code_format"
-    ],
 
     "[html]": {
         "editor.detectIndentation": false,
@@ -46,25 +33,6 @@
     // spell
     "cSpell.enabled": true,
     // "cSpell.diagnosticLevel": "Hint",
-    "cSpell.diagnosticLevel": "Warning",
+    "cSpell.diagnosticLevel": "Hint",
     "cSpell.allowCompoundWords": true,
-    "cSpell.customDictionaries": {
-        "common-words": {
-            "name": "common-words",
-            "path": "${workspaceFolder}\\common-words.txt",
-            "description": "Words used in common among projects",
-            "addWords": true
-        },
-        "project-words": {
-            "name": "project-words",
-            "path": "${workspaceFolder}\\project-words.txt",
-            "description": "Words used in this project",
-            "addWords": true
-        },
-        "custom": true, // Enable the `custom` dictionary
-        "internal-terms": false // Disable the `internal-terms` dictionary
-    },
-    "cSpell.ignorePaths": [
-        "./project-words.txt",
-    ],
 }

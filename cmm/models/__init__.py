@@ -2,5 +2,5 @@
 from .utils import *
 from .versioned_table import *
 from .simple_table import *
-from .common_base_table import *
+from .history_table import *
 from .models import *

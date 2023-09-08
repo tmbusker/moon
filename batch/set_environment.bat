@@ -1,0 +1,12 @@
+echo off
+
+@REM POSTGRESQL
+setx POSTGRES_PASSWORD p09ol@Busking
+
+@REM SQL SERVER
+setx SQLSERVER_PASSWORD P09olp09ol
+
+@REM LDAP
+setx AUTH_LDAP_SERVER_URI ldap://192.168.20.103:389/
+setx AUTH_LDAP_BIND_DN cn=admin,dc=busking-u,dc=ac,dc=jp
+setx AUTH_LDAP_BIND_PASSWORD p09ol@Busking

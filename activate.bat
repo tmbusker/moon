@@ -1,3 +1,5 @@
-echo off
+echo on
 
-..\venv\Scripts\Activate.bat
+call ..\venv\Scripts\Activate.bat
+set "path=%path%;%~dp0batch"
+path

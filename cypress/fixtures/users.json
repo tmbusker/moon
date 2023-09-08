@@ -1,0 +1,65 @@
+[
+    {
+        "name": "admin_user1",
+        "password": "p09ol@Busking",
+        "is_staff": true,
+        "is_superuser": true,
+        "group": "admin_group"
+    },
+    {
+        "name": "admin_user2",
+        "password": "p09ol@Busking",
+        "is_staff": true,
+        "is_superuser": true,
+        "group": "admin_group"
+    },
+    {
+        "name": "admin_user3",
+        "password": "p09ol@Busking",
+        "is_staff": true,
+        "is_superuser": true,
+        "group": "admin_group"
+    },
+    {
+        "name": "staff_user1",
+        "password": "p09ol@Busking",
+        "is_staff": true,
+        "is_superuser": false,
+        "group": "staff_group"
+    },
+    {
+        "name": "staff_user2",
+        "password": "p09ol@Busking",
+        "is_staff": true,
+        "is_superuser": false,
+        "group": "staff_group"
+    },
+    {
+        "name": "staff_user3",
+        "password": "p09ol@Busking",
+        "is_staff": true,
+        "is_superuser": false,
+        "group": "staff_group"
+    },
+    {
+        "name": "user_user1",
+        "password": "p09ol@Busking",
+        "is_staff": false,
+        "is_superuser": false,
+        "group": "user_group"
+    },
+    {
+        "name": "user_user2",
+        "password": "p09ol@Busking",
+        "is_staff": false,
+        "is_superuser": false,
+        "group": "user_group"
+    },
+    {
+        "name": "user_user3",
+        "password": "p09ol@Busking",
+        "is_staff": false,
+        "is_superuser": false,
+        "group": "user_group"
+    }
+]

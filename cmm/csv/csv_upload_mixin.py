@@ -1,114 +1,175 @@
-import logging
-
-from django.core.exceptions import PermissionDenied
+import math
+from typing import Any, Dict, Tuple, Type
+import io
+import csv
+from datetime import date, datetime
 from django.db import transaction
-from django.forms import FileField, Form
-from django.shortcuts import redirect
-from django.template.response import TemplateResponse
-from django.urls import path, reverse_lazy
+from django.forms import ModelForm, modelform_factory
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-from cmm.csv import CsvLog, CsvUploader
+from django.db.utils import IntegrityError
+from cmm.models import SimpleTable
+from cmm.csv import CsvBase, CsvLog, UploadMixin
+from cmm.forms import get_modelform_error_messages, get_modelform_non_unique_error_codes
 
 
-UPLOAD_CSV = 'upload_csv'
-_logger = logging.getLogger(__name__)
-
-
-class CsvUploadForm(Form):
-    """CSVファイルアップロード用Form"""
-    upload_file = FileField(
-        required=True,
-        label=_('File to upload')
-    )
-
-
-class CsvUploadMixin:
+class CsvUploadMixin(CsvBase, UploadMixin):
     """
-    CSVアップロード処理のDjango権限設定と画面処理
+    CSVファイルの読込とModelFormを利用した有効性チェックを実装
     """
 
-    # change_list_template = 'cmm/change_list_with_csv_upload.html'
-    upload_template = 'cmm/csv_upload.html'
+    header_row_number = 1
+    # エラー件数がエラー容認度(%)を超えた場合は処理を中断する、エラーカウントはChunkごとに行う。
+    error_tolerance_rate = 10
+    # DBにすでに存在するレコードを上書きするかスキップするかを指定する。true: 上書き; false: スキップ
+    is_overwrite_existing = True
 
-    def has_upload_csv_permission(self, request) -> bool:
-        """CSV upload権限有無のチェック"""
-        opts = self.model._meta              # type: ignore[attr-defined]
-        if opts.model_name.lower() == 'user' or opts.model_name.lower() == 'group':
-            return request.user.has_perm(f'{opts.app_label}.add_{opts.model_name}')         # type:ignore[no-any-return]
+    # CSVファイルからインポートされない項目のデフォルト値を設定する
+    def get_default_values(self) -> Dict[str, Any]:
+        default_values = {}
+        return default_values
 
-        return request.user.has_perm(f'{opts.app_label}.{UPLOAD_CSV}_{opts.model_name}')    # type:ignore[no-any-return]
+    def csv2model(self, csv_data: Dict[str, str]) -> Dict[str, Any]:
+        """デフォルトでは同名項目を転送、CSVの項目名とDBのカラム名が同じではない場合はここでのマッピングが必要"""
+        model_dict = {}
+        for (k, v) in csv_data.items():
+            if k in self.get_model_fields():
+                if self.get_model_fields().get(k) == 'DateField':
+                    model_dict[k] = datetime.strptime(v, self.date_format).date()
+                elif self.get_model_fields().get(k) == 'DateTimeField':
+                    model_dict[k] = datetime.strptime(v, self.datetime_format)
+                else:
+                    model_dict[k] = v
+        # model_dict = {k: v for (k, v) in csv_data.items() if k in [f.name for f in self.get_model_fields()]}
+        if issubclass(self.model, SimpleTable):
+            updater = 'updater'
+            if updater not in model_dict:
+                model_dict[updater] = self.user_name
 
-    def changelist_view(self, request, extra_context=None):
-        """CSV upload権限を画面側に渡す"""
-        extra_context = extra_context or {}
-        extra_context['has_upload_csv_permission'] = self.has_upload_csv_permission(request)
-        return super().changelist_view(request, extra_context=extra_context)
+        return model_dict
 
-    def get_urls(self):
-        """CSV uploadのURLを設定"""
-        # pylint: disable = protected-access
-        opts = self.model._meta
-        upload_url = [
-            path('csv_upload/', self.admin_site.admin_view(self.upload_action),
-                 name=f'{opts.app_label}_{opts.model_name}_csv_upload'),
-        ]
-        return upload_url + super().get_urls()
+    def __get_modelform_class(self) -> Type[ModelForm]:
+        """Dynamically generate ModelForm class"""
+        def disable_formfield(db_field, **kwargs):
+            form_field = db_field.formfield(**kwargs)
+            if form_field:
+                form_field.widget.attrs['disabled'] = 'true'
+            return form_field
 
-    @transaction.non_atomic_requests
-    def upload_action(self, request):
-        """CSV upload処理"""
-        if not self.has_upload_csv_permission(request):
-            _logger.info('Trying to upload CSV file without permission.')
-            raise PermissionDenied
+        model_form: Type[ModelForm] = modelform_factory(self.model, fields=self.get_model_fields().keys(),
+                                                        formfield_callback=disable_formfield)
+        return model_form
 
-        # pylint: disable = protected-access
-        opts = self.model._meta
-        title = _('Upload %(name)s') % {'name': opts.verbose_name}
-        context = {
-            **self.admin_site.each_context(request),
-            'title': title,
-            'app_list': self.admin_site.get_app_list(request),
-            'opts': opts,
-            'has_view_permission': self.has_view_permission(request),
-        }
+    def __validate_by_modelform(self, csv_log: CsvLog):
+        """ModelFormの入力チェックを実施"""
+        modelform = self.__get_modelform_class()(self.csv2model(csv_log.row_content))
 
-        # インポートファイルの選択画面表示
-        if request.method == "GET":
-            form = CsvUploadForm()
+        if modelform.is_valid():
+            csv_log.log_level = CsvLog.INFO
+            csv_log.message = _('Newly imported row.')
+            modelform.cleaned_data = modelform.data
+            csv_log.modelform = modelform
+        else:
+            non_unique_error_codes = get_modelform_non_unique_error_codes(modelform)
+            if not non_unique_error_codes:      # only unique violation
+                if self.is_overwrite_existing:
+                    csv_log.message = _("Update existing row.")
+                    csv_log.log_level = CsvLog.INFO
+                    csv_log.edit_type = CsvLog.UPDATE
+                    modelform.cleaned_data = modelform.data
+                    csv_log.modelform = modelform
+                else:
+                    csv_log.log_level = CsvLog.WARN     # DBと重複したのでスキップする
+                    csv_log.message = get_modelform_error_messages(modelform)
+            else:
+                csv_log.log_level = CsvLog.ERROR
+                csv_log.message = get_modelform_error_messages(modelform)
 
-        # 画面で選択したインポートファイルの受け取り
-        if request.method == "POST":
-            form = CsvUploadForm(request.POST, request.FILES)
-            if form.is_valid():
-                csv_file = form.cleaned_data['upload_file']     # django.core.files.uploadedfile.InMemoryUploadedFile
-                _logger.info('Importing CSV file %s into %s.', csv_file.name, opts.model_name)
+    def __has_too_many_errors(self, error_cnt: int) -> bool:
+        error_limit = math.floor(self.chunk_size * self.error_tolerance_rate / 100)
+        return error_cnt > error_limit
 
-                uploader = CsvUploader(self)
+    def __save(self, chunk: list[CsvLog]) -> int:
+        """save valid data and log info to database"""
+        saved_rows: int = self.__save2db(chunk)
+        self.__save2db_csv_logs(chunk)
+        return saved_rows
 
-                # インポートファイルの読み込み処理
-                (row_cnt, lot_number) = uploader.read_csv_file(csv_file, request.user.username)
+    @transaction.atomic
+    def __save2db(self, chunk: list[CsvLog]) -> int:
+        """DB保存処理"""
+        saved_rows = 0
+        valid_data = [v for v in chunk if v.log_level == CsvLog.INFO]
 
-                # ログ情報収集
-                queryset = CsvLog.objects.filter(lot_number=lot_number)
-                # 読み飛ばしたレコード
-                skipped = list(queryset.filter(log_level=CsvLog.WARN).order_by('row_no'))
-                # エラーで破棄したレコード
-                discarded = list(queryset.filter(log_level=CsvLog.ERROR).order_by('row_no'))
-                uploaded = row_cnt - uploader.header_row_number - len(skipped) - len(discarded)
-                info = _('Upload result: uploaded %(imp)s rows, skipped %(skip)s rows and discarded: %(dis)s rows.'
-                         ) % {'imp': uploaded, 'skip': len(skipped), 'dis': len(discarded)}
-                _logger.info(info)
+        for csv_log in valid_data:
+            try:
+                if self.is_overwrite_existing:
+                    self.model.objects.update_or_create(**csv_log.modelform.cleaned_data)
+                else:
+                    self.model.objects.create(**csv_log.modelform.cleaned_data)
+                saved_rows += 1
+            except IntegrityError as e:
+                csv_log.log_level = CsvLog.ERROR
+                csv_log.message = e.args[0]
 
-                if discarded or skipped:
-                    context['title'] = _('%(name)s upload errors') % {'name': opts.verbose_name}
-                    context['field_names'] = uploader.csv_headers
-                    context['csv_logs'] = [csv_log.convert_content2values() for csv_log in discarded] \
-                        + [csv_log.convert_content2values() for csv_log in skipped]
-                    context['info'] = info
-                    return TemplateResponse(request, 'cmm/csv_upload_error.html', context)
+        return saved_rows
 
-                return redirect(reverse_lazy(
-                    f'{request.resolver_match.namespace}:{opts.app_label}_{opts.model_name}_changelist'))
+    @transaction.atomic
+    def __save2db_csv_logs(self, chunk: list[CsvLog]) -> None:
+        """インポートログ情報をDBに記録する"""
+        CsvLog.objects.bulk_create([csv_log.convert_content2json() for csv_log in chunk])
 
-        context['form'] = form
-        return TemplateResponse(request, 'cmm/csv_upload.html', context)
+    def pre_import_processing(self, *args, **kwargs):
+        """CSV importの前処理"""
+
+    def post_import_processing(self, *args, **kwargs):
+        """CSV importの後処理"""
+
+    def read_csv_file(self) -> int:
+        """
+        CSVファイルの読み込み処理、性能を考慮してchunkごとに読み込んでDBに保存する
+        """
+
+        # アップロード事前処理
+        self.pre_import_processing()
+
+        text_wrapper = io.TextIOWrapper(self.csv_file, encoding=self.encoding)
+        csv_reader = csv.reader(text_wrapper, dialect=self.dialect)
+
+        row_no = 0
+        chunk: list[CsvLog] = []              # list[CsvLog]
+        error_cnt = 0
+        for row in csv_reader:
+            row_no += 1
+
+            # ヘッダー行と空行は読み飛ばすだけ、ログ記録は残さない
+            if row_no <= self.header_row_number or not row:
+                continue
+
+            csv_log = CsvLog(file_name=self.csv_file.name,
+                             row_no=row_no,
+                             row_content=dict(zip(self.get_csv_field_names(), row)),
+                             creator=self.user_name,
+                             created_at=timezone.now(),
+                             updater=self.user_name,
+                             updated_at=timezone.now(),
+                             version=1,
+                             lot_number=self.lot_number)
+
+            self.__validate_by_modelform(csv_log)
+            chunk.append(csv_log)
+
+            if len(chunk) >= self.chunk_size:
+                saved_rows = self.__save(chunk)
+
+                error_cnt += len(chunk) - saved_rows
+                if self.__has_too_many_errors(error_cnt):
+                    break
+                chunk.clear()
+        else:
+            if chunk:
+                self.__save(chunk)
+
+        # インポートファイルを読み込みがすべて完了した後の処理
+        self.post_import_processing()
+        return row_no

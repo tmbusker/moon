@@ -1,0 +1,11 @@
+[
+    {
+        "name": "admin_group"
+    },
+    {
+        "name": "staff_group"
+    },
+    {
+        "name": "user_group"
+    }
+]
